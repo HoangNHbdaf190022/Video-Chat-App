@@ -90,21 +90,25 @@ function App() {
 
 	const leaveCall = () => {
 		setCallEnded(true)
+		userVideo.current.srcObject.getTracks().forEach((track) => track.stop())
 		connectionRef.current.destroy()
+		setCallAccepted(false)
+		window.location.reload()
 	}
 
 	return (
 		<>
-			<h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
+			<p style={{ textAlign: "center", color: '#fff', fontFamily: 'cursive', fontSize: '3rem' }}>Call With Me</p>
 		<div className="container">
-			<div className="video-container">
-				<div className="video">
+			<div className="video-container video-2">
+				<div>
 					{stream &&  <video playsInline muted ref={myVideo} autoPlay style={{ width: "400px" }} />}
 				</div>
-				<div className="video">
+				<div >
 					{callAccepted && !callEnded ?
 					<video playsInline ref={userVideo} autoPlay style={{ width: "400px"}} />:
 					null}
+
 				</div>
 			</div>
 			<div className="myId">
@@ -134,18 +138,20 @@ function App() {
 						<Button variant="contained" color="secondary" onClick={leaveCall}>
 							End Call
 						</Button>
-					) : (
+					) : 			
+					(
 						<IconButton color="primary" aria-label="call" onClick={() => callUser(idToCall)}>
 							<PhoneIcon fontSize="large" />
 						</IconButton>
 					)}
-					{idToCall}
+						{idToCall}
+					
 				</div>
 			</div>
 			<div>
 				{receivingCall && !callAccepted ? (
 						<div className="caller">
-						<h1 >{name} is calling...</h1>
+						<h1>{name} is calling...</h1>
 						<Button variant="contained" color="primary" onClick={answerCall}>
 							Answer
 						</Button>
