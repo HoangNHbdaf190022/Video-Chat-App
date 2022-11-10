@@ -10,7 +10,8 @@ import io from "socket.io-client"
 import "./App.css"
 
 
-const socket = io.connect('http://localhost:5000')
+// const socket = io.connect('https://backend-videochat.herokuapp.com/')
+const socket = io.connect('localhost:5000')
 function App() {
 	const [ me, setMe ] = useState("")
 	const [ stream, setStream ] = useState()
@@ -102,12 +103,29 @@ function App() {
 		<div className="container">
 			<div className="video-container video-2">
 				<div>
-					{stream &&  <video playsInline muted ref={myVideo} autoPlay style={{ width: "400px" }} />}
+					{stream &&  
+						<video 
+							playsInline 
+							muted ref={myVideo} 
+							autoPlay 
+							style={{ 
+								width: "400px", 
+								borderRadius: '5px', 
+								boxShadow: 'inset 0 -10px 0 0 rgba(0, 0, 0, 0.6), 0 0 10px 0 rgba(0, 0, 0, 0.5)' }} 
+						/>}
 				</div>
 				<div >
 					{callAccepted && !callEnded ?
-					<video playsInline ref={userVideo} autoPlay style={{ width: "400px"}} />:
-					null}
+					<video 
+						playsInline 
+						ref={userVideo} 
+						autoPlay 
+						style={{ 
+							width: "400px", 
+							borderRadius: '5px', 
+							boxShadow: 'inset 0 -10px 0 0 rgba(0, 0, 0, 0.6), 0 0 10px 0 rgba(0, 0, 0, 0.5)' }} 
+					/>:
+					null }
 
 				</div>
 			</div>
@@ -151,7 +169,7 @@ function App() {
 			<div>
 				{receivingCall && !callAccepted ? (
 						<div className="caller">
-						<h1>{name} is calling...</h1>
+						<h1>{name !== "" ? name : "Anonymous"} is calling... </h1>
 						<Button variant="contained" color="primary" onClick={answerCall}>
 							Answer
 						</Button>
